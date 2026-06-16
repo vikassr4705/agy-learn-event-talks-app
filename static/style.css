@@ -745,6 +745,34 @@ a:hover {
     gap: 12px;
 }
 
+
+.feed-title-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-secondary-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.btn-secondary-sm:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
 /* Helper accessibility class */
 .sr-only {
     position: absolute;

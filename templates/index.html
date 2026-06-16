@@ -61,8 +61,13 @@
         <!-- Main Feed List -->
         <main class="feed-section">
             <div class="feed-header">
-                <h2 id="feed-results-title">Release Feed</h2>
-                <span id="results-count" class="badge count-badge">0 items</span>
+                <div class="feed-title-area">
+                    <h2 id="feed-results-title">Release Feed</h2>
+                    <span id="results-count" class="badge count-badge">0 items</span>
+                </div>
+                <button id="export-csv-button" class="btn-secondary-sm" title="Export current feed to CSV" aria-label="Export to CSV">
+                    <i class="fa-solid fa-file-csv"></i> Export CSV
+                </button>
             </div>
 
             <div id="loading-state" class="loading-state">

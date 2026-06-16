@@ -22,6 +22,7 @@ const DOM = {
     typeFilter: document.getElementById('type-filter'),
     resultsCount: document.getElementById('results-count'),
     feedContainer: document.getElementById('feed-container'),
+    exportCsvBtn: document.getElementById('export-csv-button'),
     
     // States
     loadingState: document.getElementById('loading-state'),
@@ -348,9 +349,46 @@ function updateLastUpdatedTime() {
     }
 }
 
+// Export the filtered release notes to a CSV file
+function exportToCSV() {
+    if (state.filteredReleases.length === 0) {
+        alert('No release notes to export.');
+        return;
+    }
+    
+    const headers = ['Title', 'Date', 'Type', 'Link', 'Content'];
+    const rows = state.filteredReleases.map(item => {
+        const title = item.title;
+        const date = formatDate(item.date);
+        const type = item.inferredType;
+        const link = item.link || '';
+        const content = stripHtml(item.content).replace(/\s+/g, ' ').trim();
+        return [title, date, type, link, content];
+    });
+    
+    let csvContent = headers.map(h => `"${h.replace(/"/g, '""')}"`).join(',') + '\n';
+    rows.forEach(row => {
+        const rowStr = row.map(val => `"${val.replace(/"/g, '""')}"`).join(',');
+        csvContent += rowStr + '\n';
+    });
+    
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    
+    const dateStamp = new Date().toISOString().slice(0, 10);
+    link.setAttribute("download", `bigquery_release_notes_${dateStamp}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
 // Set up UI Event listeners
 function setupEventListeners() {
     DOM.refreshBtn.addEventListener('click', fetchReleaseNotes);
+    DOM.exportCsvBtn.addEventListener('click', exportToCSV);
     DOM.retryBtn.addEventListener('click', fetchReleaseNotes);
     
     DOM.searchInput.addEventListener('input', (e) => {
