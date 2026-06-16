@@ -42,6 +42,7 @@ const DOM = {
     // Tweet Composer
     tweetTextarea: document.getElementById('tweet-textarea'),
     charCounter: document.getElementById('char-counter'),
+    copyBtn: document.getElementById('copy-button'),
     tweetBtn: document.getElementById('tweet-button'),
     tagButtons: document.querySelectorAll('.tag-btn')
 };
@@ -363,6 +364,22 @@ function setupEventListeners() {
     });
     
     DOM.tweetTextarea.addEventListener('input', updateCharCounter);
+    
+    DOM.copyBtn.addEventListener('click', () => {
+        const text = DOM.tweetTextarea.value;
+        navigator.clipboard.writeText(text).then(() => {
+            const originalHTML = DOM.copyBtn.innerHTML;
+            DOM.copyBtn.innerHTML = `<i class="fa-solid fa-check"></i> Copied!`;
+            DOM.copyBtn.disabled = true;
+            setTimeout(() => {
+                DOM.copyBtn.innerHTML = originalHTML;
+                DOM.copyBtn.disabled = false;
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy text: ', err);
+            alert('Failed to copy to clipboard.');
+        });
+    });
     
     DOM.tweetBtn.addEventListener('click', () => {
         const text = DOM.tweetTextarea.value;

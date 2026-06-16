@@ -740,6 +740,11 @@ a:hover {
     color: var(--danger);
 }
 
+.composer-actions {
+    display: flex;
+    gap: 12px;
+}
+
 /* Helper accessibility class */
 .sr-only {
     position: absolute;
