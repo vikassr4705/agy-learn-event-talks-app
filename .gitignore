@@ -133,6 +133,3 @@ dmypy.json
 *.swp
 *.swo
 
-# Local news/summary files
-news.txt
-summary.txt
